@@ -1,26 +1,141 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-forest: #1d3a2a;
+  --color-forest-deep: #12261b;
+  --color-moss: #548235;
+  --color-sage: #a9bf8e;
+  --color-parchment: #f7f2e8;
+  --color-cream: #fbf8f2;
+  --color-ember: #c4602b;
+  --color-gold: #e2a83c;
+  --color-ink: #1b201d;
+  --color-stone: #5d655f;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scroll reveal: elements start hidden, <Reveal> adds .is-in when visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Slow Ken Burns drift on hero photos */
+@keyframes drift {
+  from { transform: scale(1.12) translate3d(0, 0, 0); }
+  to { transform: scale(1.02) translate3d(-1.5%, -1%, 0); }
+}
+.ken-burns {
+  animation: drift 22s ease-out forwards;
+}
+
+/* Birds crossing the hero: each one flies its own path */
+@keyframes fly {
+  0% { transform: translate3d(-10vw, var(--y0), 0) scale(var(--s)); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translate3d(110vw, var(--y1), 0) scale(var(--s)); opacity: 0; }
+}
+@keyframes flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(-0.55); }
+}
+.bird {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  animation: fly var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+.bird .wing {
+  transform-origin: 50% 60%;
+  transform-box: fill-box;
+  animation: flap var(--flap, 0.7s) ease-in-out infinite;
+}
+
+/* Photo strip that scrolls on its own (content is duplicated, so -50% loops seamlessly) */
+@keyframes marquee {
+  to { transform: translateX(calc(-50% - 0.625rem)); }
+}
+
+/* Kettle of hawks circling (Hawk Watch page) */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); }
+}
+.kettle-bird {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation: orbit var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+/* Motus migration line drawing itself */
+.draw-path {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  transition: stroke-dashoffset 3.2s cubic-bezier(0.45, 0, 0.2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+.is-in .draw-path {
+  stroke-dashoffset: 0;
+}
+
+@keyframes ping-soft {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.ping {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ping-soft 2.4s ease-out infinite;
+}
+
+/* Hawk Watch bars grow when revealed */
+.bar {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+.is-in .bar {
+  transform: scaleX(1);
+}
+.bar-v {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+.is-in .bar-v {
+  transform: scaleY(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .bar, .bar-v, .draw-path { transition: none; opacity: 1; transform: none; stroke-dashoffset: 0; }
+  .ken-burns, .bird .wing, .kettle-bird, .ping { animation: none; }
+  .bird { display: none; }
 }
