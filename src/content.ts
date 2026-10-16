@@ -135,7 +135,7 @@ export const hawkWatch = {
     "Lawn chairs and a cooler line the edge of the overlook. A whiteboard leans against the cooler, spotting scopes sit on tripods, and a dozen people scan the horizon. Someone calls out and points at a distant ridge. Binoculars swing in unison. Dark specks are spiraling up into the clouds — a kettle. “Looks like Broad-wings.” “I count 23.” Twenty-three tick marks go on the board.",
   sceneCredit: "Adapted from “A Day at the Hawk Watch” by Paul Laurent",
   season2026:
-    "2026 was a strange year. A big front pushed this year's Broad-winged Hawks west of the escarpment — GPS-tagged birds from the Broad-winged Hawk Project confirmed it — so the count came in well below recent seasons. The volunteers were out there anyway, day after day: 358 volunteer hours, visitors from seven states and England, and 239 Monarchs counted alongside the hawks.",
+    "2026 was a strange year. A big front pushed this year's Broad-winged Hawks west of the escarpment — GPS-tagged birds from the Broad-winged Hawk Project confirmed it — so the count came in well below recent seasons. The volunteers were out there anyway, day after day: 358 volunteer hours, visitors from six states and England, and 239 Monarchs counted alongside the hawks.",
 };
 
 export const motus = {
