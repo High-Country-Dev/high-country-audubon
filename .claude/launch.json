@@ -1,6 +1,0 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    { "name": "hcas", "runtimeExecutable": "bash", "runtimeArgs": ["-lc", "source ~/.nvm/nvm.sh && cd /Users/nish/projects/high-country-audubon && pnpm start -p 3217"], "port": 3217 }
-  ]
-}
